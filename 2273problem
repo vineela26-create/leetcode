@@ -1,0 +1,32 @@
+import java.util.Arrays;
+import java.util.ArrayList;
+
+class Solution {
+    public List<String> removeAnagrams(String[] words) {
+    List<String> wordList = new ArrayList<>(Arrays.asList(words));
+List<String> sortedList = new ArrayList<>();
+
+for (int i = 0; i < wordList.size(); i++) {
+    char[] arr = wordList.get(i).toCharArray();
+    Arrays.sort(arr);
+    sortedList.add(new String(arr));
+}
+
+for (int i = 0; i < sortedList.size() - 1; i++) {
+    if (sortedList.get(i).equals(sortedList.get(i + 1))) {
+        wordList.remove(i + 1);
+        sortedList.remove(i + 1);
+        i--;
+    }
+}
+
+
+       
+       
+       return wordList;
+
+         
+
+
+    }
+}
