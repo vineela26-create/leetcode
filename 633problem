@@ -1,0 +1,12 @@
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        for(long i=0;i*i<=c;i++) {
+            long j=(long) Math.sqrt(c-i*i);
+                if(i*i+j*j==c) {
+                    return true;
+                }
+            
+        }
+        return false;
+    }
+}
