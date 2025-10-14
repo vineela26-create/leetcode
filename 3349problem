@@ -1,0 +1,31 @@
+import java.util.*;
+
+class Solution {
+    public boolean hasIncreasingSubarrays(List<Integer> nums, int k) {
+        if (nums.size() < 2 * k) return false; 
+
+        for (int start = 0; start <= nums.size() - 2 * k; start++) {
+            boolean first = true;
+            for (int i = start; i < start + k - 1; i++) {
+                if (nums.get(i) >= nums.get(i + 1)) {
+                    first = false;
+                    break;
+                }
+            }
+            if (!first) continue;
+
+            boolean second = true;
+            int nextStart = start + k;
+            for (int i = nextStart; i < nextStart + k - 1; i++) {
+                if (nums.get(i) >= nums.get(i + 1)) {
+                    second = false;
+                    break;
+                }
+            }
+
+            if (second) return true;
+        }
+
+        return false;
+    }
+}
