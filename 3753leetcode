@@ -1,0 +1,93 @@
+class Solution {
+
+    static class Pair {
+        long count;
+        long waviness;
+
+        Pair(long count, long waviness) {
+            this.count = count;
+            this.waviness = waviness;
+        }
+    }
+
+    private String num;
+    private Pair[][][][][] memo;
+    private boolean[][][][][] vis;
+
+    public long totalWaviness(long num1, long num2) {
+        return solve(num2) - solve(num1 - 1);
+    }
+
+    private long solve(long x) {
+        if (x <= 0) return 0;
+
+        num = String.valueOf(x);
+        int n = num.length();
+
+        memo = new Pair[n][2][2][11][11];
+        vis = new boolean[n][2][2][11][11];
+
+        return dfs(0, 1, 0, 10, 10).waviness;
+    }
+
+    private Pair dfs(int pos, int tight, int started, int prev1, int prev2) {
+        if (pos == num.length()) {
+            return new Pair(1, 0);
+        }
+
+        if (vis[pos][tight][started][prev1][prev2]) {
+            return memo[pos][tight][started][prev1][prev2];
+        }
+
+        long totalCount = 0;
+        long totalWaviness = 0;
+
+        int limit = (tight == 1) ? num.charAt(pos) - '0' : 9;
+
+        for (int digit = 0; digit <= limit; digit++) {
+
+            int newTight = (tight == 1 && digit == limit) ? 1 : 0;
+
+            if (started == 0 && digit == 0) {
+
+                Pair next = dfs(pos + 1, newTight, 0, 10, 10);
+
+                totalCount += next.count;
+                totalWaviness += next.waviness;
+
+            } else {
+
+                if (started == 0) {
+
+                    Pair next = dfs(pos + 1, newTight, 1, digit, 10);
+
+                    totalCount += next.count;
+                    totalWaviness += next.waviness;
+
+                } else {
+
+                    long add = 0;
+
+                    if (prev2 != 10) {
+                        if ((prev1 > prev2 && prev1 > digit) ||
+                            (prev1 < prev2 && prev1 < digit)) {
+                            add = 1;
+                        }
+                    }
+
+                    Pair next = dfs(pos + 1, newTight, 1, digit, prev1);
+
+                    totalCount += next.count;
+                    totalWaviness += next.waviness + add * next.count;
+                }
+            }
+        }
+
+        Pair ans = new Pair(totalCount, totalWaviness);
+
+        vis[pos][tight][started][prev1][prev2] = true;
+        memo[pos][tight][started][prev1][prev2] = ans;
+
+        return ans;
+    }
+}
