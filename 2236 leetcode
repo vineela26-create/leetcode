@@ -1,0 +1,15 @@
+class Solution {
+    public boolean checkTree(TreeNode root) {
+        int sum=0;
+        boolean k=false;
+        
+        if(root.left!=null || root.right!=null) {
+            sum+=root.left.val+root.right.val;
+        }
+      
+        if(sum==root.val) {
+            k=true;
+        }
+        return k;
+    }
+}223
