@@ -1,0 +1,51 @@
+import java.util.*;
+
+class Solution {
+    public int maximumSwap(int num) {
+
+        ArrayList<Integer> l = new ArrayList<>();
+
+        
+        while (num > 0) {
+            l.add(num % 10);
+            num /= 10;
+        }
+        Collections.reverse(l);
+
+        int n = l.size();
+
+        for (int i = 0; i < n; i++) {
+            int maxDigit = l.get(i);
+
+            
+            for (int j = i + 1; j < n; j++) {
+                if (l.get(j) > maxDigit) {
+                    maxDigit = l.get(j);
+                }
+            }
+
+            
+            if (maxDigit > l.get(i)) {
+
+                
+                for (int j = n - 1; j > i; j--) {
+                    if (l.get(j) == maxDigit) {
+                        int temp = l.get(i);
+                        l.set(i, l.get(j));
+                        l.set(j, temp);
+                        break;
+                    }
+                }
+                break; 
+            }
+        }
+
+        
+        int result = 0;
+        for (int d : l) {
+            result = result * 10 + d;
+        }
+
+        return result;
+    }
+}
