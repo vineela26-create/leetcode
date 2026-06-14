@@ -1,0 +1,17 @@
+class Solution {
+    public int maximumGap(int[] nums) {
+        Arrays.sort(nums);
+        int max=Integer.MIN_VALUE;
+        int n=nums.length;
+        if(n<2) return 0;
+        else{
+          for(int i=1;i<n;i++) {
+            int k=nums[i]-nums[i-1];
+            if(k>max) {
+                max=Math.max(k,max);
+            }
+          }
+           return max;
+        }
+    }
+}
