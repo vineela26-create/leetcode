@@ -1,0 +1,23 @@
+class Solution {
+
+    public static int count(TreeNode root) {
+        if (root == null) return 0;
+
+        int l = count(root.left);
+        int r = count(root.right);
+
+        return Math.max(l, r) + 1;
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+
+        int l = count(root.left);
+        int r = count(root.right);
+
+       if (Math.abs(l - r) > 1) {
+            return false;
+       }
+        return isBalanced(root.left) && isBalanced(root.right);
+    }
+}
