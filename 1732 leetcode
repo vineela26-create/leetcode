@@ -1,0 +1,17 @@
+class Solution {
+    public int largestAltitude(int[] gain) {
+        List<Integer> l=new ArrayList<>();
+        int points=0;
+        l.add(0);
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<gain.length;i++) {
+            
+            points+=gain[i];
+            l.add(points);
+        }
+        for(int i=0;i<l.size();i++) {
+            max=Math.max(max,l.get(i));
+        }
+        return max;
+    }
+}
